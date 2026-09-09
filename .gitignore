@@ -1,0 +1,82 @@
+# =========================
+# Node dependencies
+# =========================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# =========================
+# Environment variables
+# =========================
+
+.env
+.env.*
+!.env.example
+
+
+# =========================
+# Build output
+# =========================
+
+dist/
+build/
+out/
+
+
+# =========================
+# TypeScript
+# =========================
+
+*.tsbuildinfo
+
+
+# =========================
+# VS Code
+# =========================
+
+.vscode/
+
+# jeśli chcesz trzymać swoje ustawienia VS Code:
+# !.vscode/settings.json
+
+
+# =========================
+# Operating system
+# =========================
+
+.DS_Store
+Thumbs.db
+
+
+# =========================
+# Logs
+# =========================
+
+logs/
+*.log
+
+
+# =========================
+# Test coverage
+# =========================
+
+coverage/
+
+
+# =========================
+# Database
+# =========================
+
+*.sqlite
+*.sqlite3
+
+
+# =========================
+# Docker local files
+# =========================
+
+docker-compose.override.yml
