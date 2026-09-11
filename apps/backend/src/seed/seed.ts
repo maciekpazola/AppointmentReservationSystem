@@ -1,5 +1,5 @@
 import { AppDataSource } from "../config/database";
-import { User } from "../entities/User";
+import { User } from "../entities/user";
 
 
 async function seed() {
@@ -22,8 +22,11 @@ async function seed() {
     if (!existingUser) {
 
         const user = userRepository.create({
+            firstName: "Admin",
+            lastName: "User",
             email: "admin@test.com",
-            passwordHash: "hashed_password"
+            passwordHash: "hashed_password",
+            createdAt: new Date()
         });
 
 

@@ -1,0 +1,12 @@
+GET http://localhost:3000/api/appointments
+
+POST http://localhost:3000/api/appointments
+Content-Type: application/json
+
+{
+    "startTime": "2024-06-01T10:00:00Z",
+    "endTime": "2024-06-01T11:00:00Z",
+    "customerId": 1,
+    "employeeId": 2,
+    "serviceId": 3
+}

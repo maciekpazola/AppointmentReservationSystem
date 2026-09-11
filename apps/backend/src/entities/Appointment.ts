@@ -2,33 +2,99 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    ManyToOne
+    ManyToOne,
+    JoinColumn,
+    CreateDateColumn,
+    UpdateDateColumn
 } from "typeorm";
 
-import { User } from "./User";
+import { User } from "./user";
+import { Service } from "./service";
+import { AppointmentStatus } from "../enums/appointmentStatus";
 
 
 @Entity()
 export class Appointment {
 
-
     @PrimaryGeneratedColumn()
     id!: number;
 
 
-    @Column()
-    date!: Date;
+    @Column({
+        type: "timestamp"
+    })
+    startTime!: Date;
 
 
     @Column({
-        default: "CREATED"
+        type: "timestamp"
     })
-    status!: string;
+    endTime!: Date;
 
+
+    @Column({
+        type: "enum",
+        enum: AppointmentStatus,
+        default: AppointmentStatus.CREATED
+    })
+    status!: AppointmentStatus;
+
+
+    // Foreign Keys
+
+    @Column()
+    customerId!: number;
+
+
+    @Column()
+    serviceId!: number;
+
+
+    @Column({
+        nullable: true
+    })
+    employeeId?: number;
+
+
+
+    // Navigation properties
 
     @ManyToOne(
         () => User,
-        user => user.appointments
+        user => user.customerAppointments
     )
-    user!: User;
+    @JoinColumn({
+        name: "customerId"
+    })
+    customer!: User;
+
+
+    @ManyToOne(
+    () => User,
+    user => user.employeeAppointments
+    )
+    @JoinColumn({
+        name: "employeeId"
+    })
+    employee!: User;
+
+
+    @ManyToOne(
+        () => Service,
+        service => service.appointments
+    )
+    @JoinColumn({
+        name: "serviceId"
+    })
+    service!: Service;
+
+
+
+
+    @CreateDateColumn()
+    createdAt!: Date;
+
+
+    @UpdateDateColumn()
+    updatedAt!: Date;
 }

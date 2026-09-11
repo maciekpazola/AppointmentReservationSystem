@@ -2,10 +2,11 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    OneToMany
+    OneToMany,
+    CreateDateColumn
 } from "typeorm";
 
-import { Appointment } from "./Appointment";
+import { Appointment } from "./appointment";
 
 
 @Entity()
@@ -27,7 +28,22 @@ export class User {
 
     @OneToMany(
         () => Appointment,
-        appointment => appointment.user
+        appointment => appointment.customer
     )
-    appointments!: Appointment[];
+    customerAppointments!: Appointment[];
+
+    @OneToMany(
+        () => Appointment,
+        appointment => appointment.employee
+    )
+    employeeAppointments!: Appointment[];
+
+    @Column()
+    firstName!: string;
+
+    @Column()
+    lastName!: string;
+
+    @CreateDateColumn()
+    createdAt!: Date;
 }

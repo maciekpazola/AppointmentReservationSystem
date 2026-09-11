@@ -1,8 +1,9 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 
-import { User } from "../entities/User";
-import { Appointment } from "../entities/Appointment";
+import { User } from "../entities/user";
+import { Appointment } from "../entities/appointment";
+import { Service } from "../entities/service";
 
 
 export const AppDataSource = new DataSource({
@@ -22,6 +23,7 @@ export const AppDataSource = new DataSource({
 
     entities: [
         User,
-        Appointment
+        Appointment,
+        Service
     ]
 });

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { UserService } from "../services/user.service";
+import { UserService } from "./user.service";
+import { CreateUserDto } from "../../dto/user/create-user.dto";
 
 
 export class UserController {
@@ -23,9 +24,9 @@ export class UserController {
         res: Response
     ) => {
 
-        const user = await this.userService.createUser(
-            req.body
-        );
+    const dto: CreateUserDto = req.body;
+
+    const user = await this.userService.createUser(dto);
 
         res.status(201).json(user);
     };
