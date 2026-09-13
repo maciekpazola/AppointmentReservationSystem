@@ -1,5 +1,7 @@
 import { AppDataSource } from "../config/database";
 import { User } from "../entities/user";
+import { Service } from "../entities/service";
+import { UserRole } from "../enums/userRole";
 
 
 async function seed() {
@@ -10,35 +12,130 @@ async function seed() {
     const userRepository =
         AppDataSource.getRepository(User);
 
-
-    const existingUser =
-        await userRepository.findOne({
-            where: {
-                email: "admin@test.com"
-            }
-        });
+    const serviceRepository =
+        AppDataSource.getRepository(Service);
 
 
-    if (!existingUser) {
 
-        const user = userRepository.create({
-            firstName: "Admin",
-            lastName: "User",
+    /*
+        USERS
+    */
+
+    const users = [
+        {
             email: "admin@test.com",
             passwordHash: "hashed_password",
-            createdAt: new Date()
-        });
+            firstName: "Admin",
+            lastName: "System",
+            role: UserRole.ADMIN
+        },
+        {
+            email: "anna.employee@test.com",
+            passwordHash: "hashed_password",
+            firstName: "Anna",
+            lastName: "Kowalska",
+            role: UserRole.EMPLOYEE
+        },
+        {
+            email: "piotr.employee@test.com",
+            passwordHash: "hashed_password",
+            firstName: "Piotr",
+            lastName: "Nowak",
+            role: UserRole.EMPLOYEE
+        },
+        {
+            email: "jan.customer@test.com",
+            passwordHash: "hashed_password",
+            firstName: "Jan",
+            lastName: "Kowalski",
+            role: UserRole.CUSTOMER
+        },
+        {
+            email: "kasia.customer@test.com",
+            passwordHash: "hashed_password",
+            firstName: "Katarzyna",
+            lastName: "Wiśniewska",
+            role: UserRole.CUSTOMER
+        }
+    ];
 
 
-        await userRepository.save(user);
+    for (const userData of users) {
 
-        console.log("Admin user created");
+        const exists =
+            await userRepository.findOne({
+                where: {
+                    email: userData.email
+                }
+            });
 
-    } else {
 
-        console.log("Admin user already exists");
+        if (!exists) {
 
+            const user =
+                userRepository.create(userData);
+
+            await userRepository.save(user);
+
+            console.log(
+                `Created user: ${user.email}`
+            );
+        }
     }
+
+
+
+    /*
+        SERVICES
+    */
+
+    const services = [
+        {
+            name: "Massage",
+            price: 150
+        },
+        {
+            name: "Haircut",
+            price: 80
+        },
+        {
+            name: "Facial Treatment",
+            price: 200
+        },
+        {
+            name: "Physiotherapy",
+            price: 180
+        },
+        {
+            name: "Consultation",
+            price: 100
+        }
+    ];
+
+
+    for (const serviceData of services) {
+
+        const exists =
+            await serviceRepository.findOne({
+                where: {
+                    name: serviceData.name
+                }
+            });
+
+
+        if (!exists) {
+
+            const service =
+                serviceRepository.create(serviceData);
+
+            await serviceRepository.save(service);
+
+            console.log(
+                `Created service: ${service.name}`
+            );
+        }
+    }
+
 
 
     await AppDataSource.destroy();
@@ -47,6 +144,8 @@ async function seed() {
 
 seed()
     .catch((error) => {
+
         console.error(error);
+
         process.exit(1);
     });

@@ -5,8 +5,9 @@ import { CreateUserDto } from "../../dto/user/create-user.dto";
 
 export class UserController {
 
-    private userService = new UserService();
-
+    constructor(
+        private userService: UserService
+    ) {}
 
     getUsers = async (
         req: Request,

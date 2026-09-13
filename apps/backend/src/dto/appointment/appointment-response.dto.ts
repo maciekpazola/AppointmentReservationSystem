@@ -6,6 +6,6 @@ export interface AppointmentResponseDto {
   endTime: Date;
   status: AppointmentStatus;
   customerId: number;
-  employeeId?: number;
+  employeeId: number;
   serviceId: number;
 }

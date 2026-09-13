@@ -5,8 +5,9 @@ import { CreateAppointmentDto } from "../../dto/appointment/create-appointment.d
 
 export class AppointmentController {
 
-    private appointmentService = new AppointmentService();
-
+    constructor(
+        private appointmentService: AppointmentService
+    ) {}
 
     getAppointments = async (
         req: Request,

@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 
 import { Appointment } from "./appointment";
+import { UserRole } from "../enums/userRole";
 
 
 @Entity()
@@ -36,7 +37,15 @@ export class User {
         () => Appointment,
         appointment => appointment.employee
     )
+
     employeeAppointments!: Appointment[];
+
+        @Column({
+            type: "enum",
+            enum: UserRole,
+            default: UserRole.CUSTOMER
+        })
+        role!: UserRole;
 
     @Column()
     firstName!: string;

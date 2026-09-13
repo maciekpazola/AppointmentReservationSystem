@@ -1,13 +1,13 @@
-import { AppDataSource } from "../../config/database";
 import { CreateUserDto } from "../../dto/user/create-user.dto";
 import { UserMapper } from "./user.mapper";
 import { User } from "../../entities/user";
-
+import { Repository } from "typeorm";
 
 export class UserService {
 
-    private userRepository =
-        AppDataSource.getRepository(User);
+    constructor(
+        private userRepository: Repository<User>
+    ) {}
 
 
     async getUsers() {

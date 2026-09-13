@@ -1,13 +1,15 @@
-import { AppDataSource } from "../../config/database";
 import { CreateAppointmentDto } from "../../dto/appointment/create-appointment.dto";
 import { AppointmentMapper } from "./appointment.mapper";
 import { Appointment } from "../../entities/appointment";
-
+import { AvailabilityService } from "./availability.service";
+import { Repository } from "typeorm";
 
 export class AppointmentService {
 
-    private appointmentRepository =
-        AppDataSource.getRepository(Appointment);
+        constructor(
+        private appointmentRepository: Repository<Appointment>,
+        private availabilityService: AvailabilityService
+    ) {}
 
 
     async getAppointments() {
@@ -29,8 +31,16 @@ export class AppointmentService {
 
     async createAppointment(dto: CreateAppointmentDto) {
 
+        await this.availabilityService.ensureAvailable(
+            dto.employeeId,
+            dto.startTime,
+            dto.endTime
+        );
+
         const entity = AppointmentMapper.toEntity(dto);
-        const appointment = this.appointmentRepository.create(entity);
+
+        const appointment =
+            this.appointmentRepository.create(entity);
 
         return this.appointmentRepository.save(appointment);
     }

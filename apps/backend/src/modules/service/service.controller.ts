@@ -5,8 +5,9 @@ import { CreateServiceDto } from "../../dto/service/create-service.dto";
 
 export class ServiceController {
 
-    private serviceService = new ServiceService();
-
+    constructor(
+        private serviceService: ServiceService
+    ) {}
 
     getServices = async (
         req: Request,

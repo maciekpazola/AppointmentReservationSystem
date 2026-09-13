@@ -2,8 +2,6 @@ import { CreateAppointmentDto } from "../../dto/appointment/create-appointment.d
 import { AppointmentResponseDto } from "../../dto/appointment/appointment-response.dto";
 import { Appointment } from "../../entities/appointment";
 import { AppointmentStatus } from "../../enums/appointmentStatus";
-import { User } from "../../entities/user";
-import { Service } from "../../entities/service";
 
 export class AppointmentMapper {
   static toEntity(dto: CreateAppointmentDto): Appointment {

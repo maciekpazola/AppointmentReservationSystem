@@ -50,10 +50,8 @@ export class Appointment {
     serviceId!: number;
 
 
-    @Column({
-        nullable: true
-    })
-    employeeId?: number;
+    @Column()
+    employeeId!: number;
 
 
 

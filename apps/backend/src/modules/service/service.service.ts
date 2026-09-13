@@ -1,13 +1,13 @@
-import { AppDataSource } from "../../config/database";
 import { CreateServiceDto } from "../../dto/service/create-service.dto";
 import { ServiceMapper } from "./service.mapper";
 import { Service } from "../../entities/service";
-
+import { Repository } from "typeorm";
 
 export class ServiceService {
 
-    private serviceRepository =
-        AppDataSource.getRepository(Service);
+    constructor(
+        private serviceRepository: Repository<Service>
+    ) {}
 
 
     async getServices() {
