@@ -1,5 +1,6 @@
 import { Appointment } from "../../entities/appointment";
-import { Repository, LessThan, MoreThan } from "typeorm";
+import { AppointmentStatus } from "../../enums/appointmentStatus";
+import { Repository, LessThan, MoreThan, Not } from "typeorm";
 
 
 export class AvailabilityService {
@@ -18,11 +19,14 @@ export class AvailabilityService {
             await this.appointmentRepository.findOne({
                 where: {
                     employeeId,
+                    status: Not(AppointmentStatus.CANCELLED),
                     startTime: LessThan(endTime),
                     endTime: MoreThan(startTime)
                 }
             });
-
+        console.log("StartTime:", startTime);
+        console.log("EndTime:", endTime);
+        console.log("Conflict found:", conflict);
         if(conflict){
             throw new Error(
                 "Employee is busy."

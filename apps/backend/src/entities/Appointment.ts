@@ -21,13 +21,13 @@ export class Appointment {
 
 
     @Column({
-        type: "timestamp"
+        type: "timestamptz"
     })
     startTime!: Date;
 
 
     @Column({
-        type: "timestamp"
+        type: "timestamptz"
     })
     endTime!: Date;
 

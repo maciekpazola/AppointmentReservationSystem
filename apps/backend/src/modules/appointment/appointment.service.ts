@@ -31,6 +31,11 @@ export class AppointmentService {
 
     async createAppointment(dto: CreateAppointmentDto) {
 
+        if (dto.startTime >= dto.endTime) {
+            throw new Error("Invalid time range");
+        }
+
+        console.log(dto);
         await this.availabilityService.ensureAvailable(
             dto.employeeId,
             dto.startTime,
