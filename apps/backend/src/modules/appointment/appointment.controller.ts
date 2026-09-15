@@ -19,6 +19,22 @@ export class AppointmentController {
         res.json(appointments);
     };
 
+        getAppointment = async (
+        req: Request,
+        res: Response
+    ) => {
+    const id = Number(req.params.id);
+
+    const appointment =
+        await this.appointmentService.getAppointmentById(id);
+        
+        if (!appointment) {
+            res.status(404).json({ message: "Appointment not found" });
+            return;
+        }
+
+        res.json(appointment);
+    };
 
     createAppointment = async (
         req: Request,
@@ -30,5 +46,22 @@ export class AppointmentController {
     const appointment = await this.appointmentService.createAppointment(dto);
 
         res.status(201).json(appointment);
+    };
+
+        cancelAppointment = async (
+        req: Request,
+        res: Response
+    ) => {
+
+    const id = Number(req.params.id);
+
+    const appointment = await this.appointmentService.cancelAppointment(id);
+
+        if (!appointment) {
+            res.status(404).json({ message: "Appointment not found" });
+            return;
+        }
+
+        res.status(200).json({ message: "Appointment cancelled" });
     };
 }

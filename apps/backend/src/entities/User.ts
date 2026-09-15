@@ -8,6 +8,7 @@ import {
 
 import { Appointment } from "./appointment";
 import { UserRole } from "../enums/userRole";
+import { EmployeeSchedule } from "./employeeSchedule";
 
 
 @Entity()
@@ -34,18 +35,23 @@ export class User {
     customerAppointments!: Appointment[];
 
     @OneToMany(
+        () => EmployeeSchedule,
+        schedule => schedule.employee
+    )
+    employeeSchedules!: EmployeeSchedule[];
+
+    @OneToMany(
         () => Appointment,
         appointment => appointment.employee
     )
-
     employeeAppointments!: Appointment[];
 
-        @Column({
-            type: "enum",
-            enum: UserRole,
-            default: UserRole.CUSTOMER
-        })
-        role!: UserRole;
+    @Column({
+        type: "enum",
+        enum: UserRole,
+        default: UserRole.CUSTOMER
+    })
+    role!: UserRole;
 
     @Column()
     firstName!: string;

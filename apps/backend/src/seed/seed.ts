@@ -1,7 +1,9 @@
 import { AppDataSource } from "../config/database";
 import { User } from "../entities/user";
 import { Service } from "../entities/service";
+import { EmployeeSchedule } from "../entities/employeeSchedule";
 import { UserRole } from "../enums/userRole";
+import { format, isWeekend } from "date-fns";
 
 
 async function seed() {
@@ -14,6 +16,9 @@ async function seed() {
 
     const serviceRepository =
         AppDataSource.getRepository(Service);
+
+    const employeeScheduleRepository =
+        AppDataSource.getRepository(EmployeeSchedule);
 
 
 
@@ -133,6 +138,75 @@ async function seed() {
             console.log(
                 `Created service: ${service.name}`
             );
+        }
+    }
+
+
+
+    /*
+        EMPLOYEE SCHEDULES
+    */
+
+    const employees = [
+        "anna.employee@test.com",
+        "piotr.employee@test.com"
+    ];
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // next 14 calendar days, weekdays only
+    const workingDates: string[] = [];
+
+    for (let dayOffset = 1; dayOffset <= 14; dayOffset++) {
+
+        const day = new Date(today);
+        day.setDate(day.getDate() + dayOffset);
+
+        if (!isWeekend(day)) {
+            workingDates.push(format(day, "yyyy-MM-dd"));
+        }
+    }
+
+    for (const email of employees) {
+
+        const employee =
+            await userRepository.findOne({
+                where: {
+                    email
+                }
+            });
+
+        if (!employee) {
+            continue;
+        }
+
+        for (const date of workingDates) {
+
+            const exists =
+                await employeeScheduleRepository.findOne({
+                    where: {
+                        employeeId: employee.id,
+                        date
+                    }
+                });
+
+            if (!exists) {
+
+                const schedule =
+                    employeeScheduleRepository.create({
+                        employeeId: employee.id,
+                        date,
+                        startTime: "09:00:00",
+                        endTime: "17:00:00"
+                    });
+
+                await employeeScheduleRepository.save(schedule);
+
+                console.log(
+                    `Created schedule for ${employee.email}: ${date}`
+                );
+            }
         }
     }
 

@@ -19,6 +19,22 @@ export class ServiceController {
         res.json(services);
     };
 
+    getServiceById = async (
+        req: Request,
+        res: Response
+    ) => {
+
+        const id = Number(req.params.id);
+        const service = await this.serviceService.getServiceById(id);
+
+        if (!service) {
+            res.status(404).json({ message: "Service not found" });
+            return;
+        }
+        
+        res.json(service);
+    };
+
 
     createService = async (
         req: Request,

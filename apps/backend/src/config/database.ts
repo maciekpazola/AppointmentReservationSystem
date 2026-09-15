@@ -4,6 +4,7 @@ import { DataSource } from "typeorm";
 import { User } from "../entities/user";
 import { Appointment } from "../entities/appointment";
 import { Service } from "../entities/service";
+import { EmployeeSchedule } from "../entities/employeeSchedule";
 
 
 export const AppDataSource = new DataSource({
@@ -24,6 +25,7 @@ export const AppDataSource = new DataSource({
     entities: [
         User,
         Appointment,
-        Service
+        Service,
+        EmployeeSchedule
     ]
 });
