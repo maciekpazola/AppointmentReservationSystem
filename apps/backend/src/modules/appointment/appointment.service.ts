@@ -1,7 +1,7 @@
 import { CreateAppointmentDto } from "../../dto/appointment/create-appointment.dto";
 import { AppointmentMapper } from "./appointment.mapper";
 import { Appointment } from "../../entities/appointment";
-import { AvailabilityService } from "./availability.service";
+import { AvailabilityService } from "../availability/availability.service";
 import { Repository } from "typeorm";
 
 export class AppointmentService {
@@ -21,11 +21,16 @@ export class AppointmentService {
 
 
     async getAppointmentById(id: number) {
-        return this.appointmentRepository.findOne({
+        const appointment = await this.appointmentRepository.findOne({
             where: {
                 id
             }
         });
+        if (!appointment) {
+            return null;
+        }
+
+        return appointment;
     }
 
 
@@ -35,7 +40,6 @@ export class AppointmentService {
             throw new Error("Invalid time range");
         }
 
-        console.log(dto);
         await this.availabilityService.ensureAvailable(
             dto.employeeId,
             dto.startTime,

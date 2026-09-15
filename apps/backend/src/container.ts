@@ -2,16 +2,19 @@ import { AppDataSource } from "./config/database";
 import { Appointment } from "./entities/appointment";
 import { User } from "./entities/user";
 import { Service } from "./entities/service";
-import { AvailabilityService } from "./modules/appointment/availability.service";
+import { EmployeeSchedule } from "./entities/employeeSchedule";
+import { AvailabilityService } from "./modules/availability/availability.service";
 import { AppointmentService } from "./modules/appointment/appointment.service";
 import { UserService } from "./modules/user/user.service";
 import { ServiceService } from "./modules/service/service.service";
+import { EmployeeService } from "./modules/employee/employee.service";
+import { EmployeeScheduleService } from "./modules/employeeSchedule/employeeSchedule.service";
 
 
-
-const availabilityService =
+export const availabilityService =
     new AvailabilityService(
-        AppDataSource.getRepository(Appointment)
+        AppDataSource.getRepository(Appointment),
+        AppDataSource.getRepository(EmployeeSchedule)
     );
 
 
@@ -24,6 +27,18 @@ export const appointmentService =
 export const userService =
     new UserService(
         AppDataSource.getRepository(User)
+    );
+
+export const employeeService =
+    new EmployeeService(
+        AppDataSource.getRepository(User),
+        AppDataSource.getRepository(Appointment),
+        availabilityService
+    );
+
+    export const employeeScheduleService =
+    new EmployeeScheduleService(
+        AppDataSource.getRepository(EmployeeSchedule)
     );
 
 export const serviceService =

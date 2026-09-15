@@ -19,11 +19,17 @@ export class ServiceService {
 
 
     async getServiceById(id: number) {
-        return this.serviceRepository.findOne({
+        const service = await this.serviceRepository.findOne({
             where: {
                 id
             }
         });
+
+        if (!service) {
+            return null;
+        }
+        
+        return service;
     }
 
 

@@ -1,4 +1,15 @@
-export interface CreateServiceDto {
-  name: string;
-  price: number;
+import {
+    IsString,
+    IsNotEmpty,
+    IsNumber,
+} from "class-validator";
+
+export class CreateServiceDto {
+  @IsString()
+  @IsNotEmpty()
+  name!: string;
+    
+  @IsNumber()
+  @IsNotEmpty()
+  price!: number;
 }

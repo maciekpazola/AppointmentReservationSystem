@@ -5,5 +5,5 @@ Content-Type: application/json
 
 {
     "name": "Haircut",
-    "price": 25.00
+    "price": "test"
 }
