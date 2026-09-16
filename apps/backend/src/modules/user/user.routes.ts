@@ -8,6 +8,7 @@ import { CreateUserDto } from "../../dto/user/create-user.dto";
 
 const router = Router();
 
+router.use(authenticate);
 
 const controller =
     new UserController(
@@ -16,21 +17,18 @@ const controller =
 
 router.get(
     "/",
-    authenticate,
     authorize(UserRole.ADMIN),
     controller.getUsers
 );
 
 router.get(
     "/:id",
-    authenticate,
     authorize(UserRole.ADMIN),
     controller.getUserById
 );
 
 router.post(
     "/",
-    authenticate,
     authorize(UserRole.ADMIN),
     validateDto(CreateUserDto),
     controller.createUser
