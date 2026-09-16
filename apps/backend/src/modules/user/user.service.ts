@@ -32,12 +32,12 @@ export class UserService {
         return user;
     }
 
-
+    
     async createUser(dto: CreateUserDto) {
 
-        const entity = UserMapper.toEntity(dto);
+        const entity = await UserMapper.toEntity(dto);
         const user = this.userRepository.create(entity);
-
-        return this.userRepository.save(user);
+        await this.userRepository.save(user);
+        return UserMapper.toResponse(user);
     }
 }

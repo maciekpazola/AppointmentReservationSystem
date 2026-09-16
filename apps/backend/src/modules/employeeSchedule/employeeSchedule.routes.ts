@@ -2,9 +2,13 @@ import { Router } from "express";
 import { EmployeeScheduleController } from "./employeeSchedule.controller";
 import { CreateEmployeeScheduleDto } from "../../dto/employeeSchedule/create-employeeSchedule.dto";
 import { validateDto } from "../../middleware/validation.middleware";
+import { authenticate, authorize } from "../../middleware/auth.middleware";
+import { UserRole } from "../../enums/userRole";
 import { employeeScheduleService } from "../../container";
 
 const router = Router();
+
+router.use(authenticate);
 
 const controller =
     new EmployeeScheduleController(
@@ -25,6 +29,7 @@ router.get(
 
 router.post(
     "/",
+    authorize(UserRole.ADMIN),
     validateDto(CreateEmployeeScheduleDto),
     controller.createEmployeeSchedule
 );

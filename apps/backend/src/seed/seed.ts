@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { AppDataSource } from "../config/database";
 import { User } from "../entities/user";
 import { Service } from "../entities/service";
@@ -9,6 +10,8 @@ import { format, isWeekend } from "date-fns";
 async function seed() {
 
     await AppDataSource.initialize();
+
+    const defaultPasswordHash = await bcrypt.hash("password123", 10);
 
 
     const userRepository =
@@ -29,35 +32,35 @@ async function seed() {
     const users = [
         {
             email: "admin@test.com",
-            passwordHash: "hashed_password",
+            passwordHash: defaultPasswordHash,
             firstName: "Admin",
             lastName: "System",
             role: UserRole.ADMIN
         },
         {
             email: "anna.employee@test.com",
-            passwordHash: "hashed_password",
+            passwordHash: defaultPasswordHash,
             firstName: "Anna",
             lastName: "Kowalska",
             role: UserRole.EMPLOYEE
         },
         {
             email: "piotr.employee@test.com",
-            passwordHash: "hashed_password",
+            passwordHash: defaultPasswordHash,
             firstName: "Piotr",
             lastName: "Nowak",
             role: UserRole.EMPLOYEE
         },
         {
             email: "jan.customer@test.com",
-            passwordHash: "hashed_password",
+            passwordHash: defaultPasswordHash,
             firstName: "Jan",
             lastName: "Kowalski",
             role: UserRole.CUSTOMER
         },
         {
             email: "kasia.customer@test.com",
-            passwordHash: "hashed_password",
+            passwordHash: defaultPasswordHash,
             firstName: "Katarzyna",
             lastName: "Wiśniewska",
             role: UserRole.CUSTOMER
@@ -84,6 +87,15 @@ async function seed() {
 
             console.log(
                 `Created user: ${user.email}`
+            );
+        } else if (exists.passwordHash === "hashed_password") {
+
+            exists.passwordHash = defaultPasswordHash;
+
+            await userRepository.save(exists);
+
+            console.log(
+                `Updated password hash for existing user: ${exists.email}`
             );
         }
     }

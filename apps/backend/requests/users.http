@@ -1,13 +1,22 @@
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@test.com",
+    "password": "password123"
+}
+
 GET http://localhost:3000/api/users
 
 GET http://localhost:3000/api/users/111
 
 POST http://localhost:3000/api/users
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzg5NTc4MzUyLCJleHAiOjE3ODk1NzkyNTJ9.FxVNIzWETDlkQBmsCV0ECfNvehv8mFZ5fMkjHLoMpJI
 
 {
     "firstName": "John",
-    "lastName": "Doe2",
-    "email": "john.doe2@example.com",
+    "lastName": "Doe22",
+    "email": "john.doe22@exampl2e22.com",
     "password": "password123"
 }

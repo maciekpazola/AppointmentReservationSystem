@@ -3,13 +3,19 @@ import userRoutes from "./modules/user/user.routes";
 import appointmentRoutes from "./modules/appointment/appointment.routes";
 import serviceRoutes from "./modules/service/service.routes";
 import employeeRoutes from "./modules/employee/employee.routes";
-import { employeeService } from "./container";
+import authRoutes from "./modules/auth/auth.routes";
 
 
 const app = express();
 
 
 app.use(express.json());
+
+
+app.use(
+    "/api/auth",
+    authRoutes
+);
 
 
 app.use(
