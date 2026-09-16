@@ -8,6 +8,8 @@ import { CreateServiceDto } from "../../dto/service/create-service.dto";
 
 const router = Router();
 
+router.use(authenticate);
+
 const controller =
     new ServiceController(
         serviceService
@@ -26,7 +28,6 @@ router.get(
 
 router.post(
     "/",
-    authenticate,
     authorize(UserRole.ADMIN),
     validateDto(CreateServiceDto),
     controller.createService
