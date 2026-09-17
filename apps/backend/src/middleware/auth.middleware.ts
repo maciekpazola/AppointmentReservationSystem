@@ -17,47 +17,21 @@ export function authenticate(
     next: NextFunction
 ) {
 
-    console.log("[AUTH] Incoming request:", {
-        method: req.method,
-        path: req.path,
-        authorization: req.headers.authorization
-            ? "Bearer token provided"
-            : "Missing"
-    });
-
-
     const header = req.headers.authorization;
 
 
     if (!header || !header.startsWith("Bearer ")) {
-
-        console.warn("[AUTH] Missing or invalid authorization header");
 
         return res.status(401).json({
             message: "Missing or invalid authorization header"
         });
     }
 
-
     const token = header.substring("Bearer ".length);
-
-
-    console.log("[AUTH] Token received:", {
-        length: token.length,
-        preview: `${token.substring(0, 15)}...`
-    });
-
 
     try {
 
         const payload = jwtService.verify(token);
-
-        console.log("[AUTH] Token verified:", {
-            userId: payload.id,
-            role: payload.role
-        });
-
-
         req.user = payload;
 
         next();

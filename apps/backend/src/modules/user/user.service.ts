@@ -28,8 +28,8 @@ export class UserService {
         if (!user) {
             return null;
         }
-
-        return user;
+        const response = UserMapper.toResponse(user);
+        return response;
     }
 
     
