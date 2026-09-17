@@ -6,12 +6,30 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "./dist",
 
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
 
-    "strict": true
-  }
+    "strict": true,
+
+    "types": [
+      "node",
+      "jest"
+    ],
+
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

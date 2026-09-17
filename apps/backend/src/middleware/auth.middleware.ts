@@ -29,6 +29,13 @@ export function authenticate(
 
     const token = header.substring("Bearer ".length);
 
+    if (!token) {
+
+        return res.status(401).json({
+            message: "Missing or invalid authorization header"
+        });
+    }
+
     try {
 
         const payload = jwtService.verify(token);
