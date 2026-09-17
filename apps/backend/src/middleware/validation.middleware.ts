@@ -39,6 +39,23 @@ export function validateDto(dtoClass: any) {
             body: sanitizeBody(req.body)
         });
 
+        // Body must be a plain object for plainToInstance/validate to work correctly
+        if (
+            typeof req.body !== "object" ||
+            req.body === null ||
+            Array.isArray(req.body)
+        ) {
+
+            console.warn("[VALIDATION] Failed:", {
+                path: req.path,
+                errors: [{ field: null, constraints: { isObject: "Request body must be an object" } }]
+            });
+
+            return res.status(400).json({
+                message: "Validation failed",
+                errors: [{ field: null, constraints: { isObject: "Request body must be an object" } }]
+            });
+        }
 
         const dtoInstance = plainToInstance(
             dtoClass,
