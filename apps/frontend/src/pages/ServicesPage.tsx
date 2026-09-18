@@ -19,13 +19,18 @@ export function ServicesPage() {
   return (
     <section>
       <h1>Services</h1>
-      <ul>
+      <div>
         {services.map((service) => (
-          <li key={service.id}>
-            {service.name} — ${service.price}
-          </li>
+          <div className="card">
+          <div key={service.id}>
+            <div className="card-body">
+              <h5 className="card-title">{service.name}</h5>
+              <p className="card-text">${service.price}</p>
+            </div>
+          </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }

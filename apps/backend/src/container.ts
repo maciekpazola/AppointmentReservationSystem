@@ -8,6 +8,7 @@ import { AppointmentService } from "./modules/appointment/appointment.service";
 import { UserService } from "./modules/user/user.service";
 import { ServiceService } from "./modules/service/service.service";
 import { EmployeeService } from "./modules/employee/employee.service";
+import { CustomerService } from "./modules/customer/customer.service";
 import { EmployeeScheduleService } from "./modules/employeeSchedule/employeeSchedule.service";
 import { AuthService } from "./modules/auth/auth.service";
 import { JwtService } from "./auth/jwt.service";
@@ -54,4 +55,9 @@ export const employeeService =
 export const serviceService =
     new ServiceService(
         AppDataSource.getRepository(Service)
+    );
+
+export const customerService =
+    new CustomerService(
+        AppDataSource.getRepository(User)
     );

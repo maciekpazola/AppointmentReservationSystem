@@ -4,6 +4,7 @@ import userRoutes from "./modules/user/user.routes";
 import appointmentRoutes from "./modules/appointment/appointment.routes";
 import serviceRoutes from "./modules/service/service.routes";
 import employeeRoutes from "./modules/employee/employee.routes";
+import customerRoutes from "./modules/customer/customer.routes";
 import authRoutes from "./modules/auth/auth.routes";
 import employeeScheduleRoutes from "./modules/employeeSchedule/employeeSchedule.routes";
 
@@ -49,6 +50,11 @@ app.use(
 app.use(
     "/api/employee",
     employeeRoutes
+);
+
+app.use(
+    "/api/customers",
+    customerRoutes
 );
 
 app.use(
